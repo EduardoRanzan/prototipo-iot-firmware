@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include "../include/config.h"
@@ -8,7 +9,7 @@ PubSubClient client(espClient);
 
 void reconnect() {
     while (!client.connected()) {
-        Serial.print("Conectando ao Broker...");
+        Serial.print("Conectando ao Broker... \n");
         if (client.connect("dispositivo_01")) {
             Serial.println("conectado!");
         } else {
@@ -21,7 +22,7 @@ void reconnect() {
 
 void mqtt_setup() {
     client.setServer(MQTT_HOST, MQTT_PORT);
-    Serial.println("MQTT configurado");
+    Serial.println("MQTT configurado \n");
 }
 
 
@@ -47,5 +48,9 @@ void mqtt_loop() {
 
 void mqtt_publish(const char *Topico, const String &msg) {
     if (!client.connected()) return;
+
     client.publish(Topico, msg.c_str());
+
+    Serial.printf("Tópico: %s | Valor: %s\n", Topico, msg.c_str());
 }
+

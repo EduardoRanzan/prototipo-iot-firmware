@@ -3,7 +3,6 @@
 #include "network/mqtt-client.h"
 #include "sensors/sensors.h"
 
-
 void setup() {
     Serial.begin(115200);
     wifi_setup();
@@ -11,18 +10,12 @@ void setup() {
 }
 
 void loop() {
-    wifi_loop(); 
+    wifi_loop();
     mqtt_loop();
 
-    if (veirifica_wifi()) {
-        Serial.print("Wifi ok, inserindo teste");
-        const int temperatura = get_temperatura();
-        const int umidade = get_umidade();
-    
-        mqtt_publish("", String(temperatura));
-        mqtt_publish("", String(umidade));
-    } else {
-        Serial.print("Wifi caiu");
-        delay(5000);    
-    }
-}   
+    delay(5000);
+    float temperatura = get_temperatura();
+    float umidade = get_umidade();
+    mqtt_publish("sensores/temperatura", String(temperatura));
+    mqtt_publish("sensores/umidade", String(umidade));
+}

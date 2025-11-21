@@ -1,0 +1,7 @@
+#pragma once
+
+#define WIFI_SSID        ""
+#define WIFI_PASSWORD    ""
+
+#define MQTT_HOST        ""
+#define MQTT_PORT        0
