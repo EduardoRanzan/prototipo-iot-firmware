@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#include "network/wifi-manager.h"
-#include "network/mqtt-client.h"
+#include "server/wifi-manager.h"
+#include "server/mqtt-client.h"
 #include "sensors/sensors.h"
 
 void setup() {
