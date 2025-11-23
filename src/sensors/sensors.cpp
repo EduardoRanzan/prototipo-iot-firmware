@@ -1,7 +1,7 @@
 #include "sensors.h"
 #include <DHT.h>
+#include "../include/config.h"
 
-#define DHTPIN D4
 #define DHTTYPE DHT11
 
 DHT dht(DHTPIN, DHTTYPE);
