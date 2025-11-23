@@ -5,14 +5,13 @@ unsigned long lastWifiAttempt = 0;
 
 void wifi_setup() {
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-    Serial.print("Conectando ao WiFi...");
+    Serial.println("[wifi] Conectando ao WiFi...");
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
-        Serial.print("Tentando conectar no wifi \n");
+        Serial.println("[wifi] Tentando conectar no wifi");
     }
-    Serial.println("\nWiFi conectado!");
-    Serial.print("Endereço IP: ");
-    Serial.println(WiFi.localIP());
+    Serial.println("[wifi] conectado!");
+    Serial.printf("[wifi] Endereço IP: %.S", WiFi.localIP());
 }
 
 
@@ -21,7 +20,7 @@ void wifi_loop() {
 
     unsigned long agora = millis();
     if (agora - lastWifiAttempt >= 5000) {
-        Serial.println("WiFi desconectado, tentando reconectar...");
+        Serial.println("[wifi] WiFi desconectado, tentando reconectar...");
         WiFi.reconnect();
         lastWifiAttempt = agora;
     }

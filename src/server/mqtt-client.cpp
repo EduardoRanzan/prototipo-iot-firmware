@@ -22,7 +22,7 @@ void reconnect() {
 
 void mqtt_setup() {
     client.setServer(MQTT_HOST, MQTT_PORT);
-    Serial.println("MQTT configurado \n");
+    Serial.println("[MQTT] configurado");
 }
 
 
@@ -34,11 +34,11 @@ void mqtt_loop() {
 
     unsigned long agora = millis();
     if (agora - lastMqttAttempt >= 5000) {
-        Serial.print("Tentando reconectar ao MQTT... ");
+        Serial.println("[MQTT] Tentando reconectar ao MQTT... ");
         if (client.connect("dispositivo_01")) {
-            Serial.println("conectado!");
+            Serial.println("[MQTT] conectado!");
         } else {
-            Serial.print("falhou: ");
+            Serial.print("[MQTT] falhou: ");
             Serial.println(client.state());
         }
         lastMqttAttempt = agora;
@@ -51,6 +51,6 @@ void mqtt_publish(const char *Topico, const String &msg) {
 
     client.publish(Topico, msg.c_str());
 
-    Serial.printf("Tópico: %s | Valor: %s\n", Topico, msg.c_str());
+    Serial.printf("[MQTT] Publicado Tópico: %s | Valor: %s\n", Topico, msg.c_str());
 }
 
