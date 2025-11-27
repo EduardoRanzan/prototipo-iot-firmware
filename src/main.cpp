@@ -3,6 +3,7 @@
 #include "server/mqtt-client.h"
 #include "sensors/sensors.h"
 #include "../include/config.h"
+#include "Utils/json/build-json.h"
 
 void setup() {
     Serial.begin(115200);
@@ -19,12 +20,12 @@ void loop() {
 
     float temperatura = get_temperatura();
     if (!isnan(temperatura)) {
-        mqtt_publish("sensores/temperatura", String(temperatura));
+        mqtt_publish("sensores/temperatura", build_json(temperatura));
     }
 
     float umidade = get_umidade();
 
     if (!isnan(umidade)) {
-        mqtt_publish("sensores/umidade", String(umidade));
+        mqtt_publish("sensores/umidade", build_json(umidade));
     }
 }

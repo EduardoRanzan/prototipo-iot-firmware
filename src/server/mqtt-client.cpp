@@ -54,3 +54,4 @@ void mqtt_publish(const char *Topico, const String &msg) {
     Serial.printf("[MQTT] Publicado Tópico: %s | Valor: %s\n", Topico, msg.c_str());
 }
 
+
