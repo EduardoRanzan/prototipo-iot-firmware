@@ -46,12 +46,19 @@ void mqtt_loop() {
 }
 
 
-void mqtt_publish(const char *Topico, const String &msg) {
-    if (!client.connected()) return;
+bool mqtt_publish(const char *Topico, const String &msg) {
+    if (!client.connected()) return false;
 
-    client.publish(Topico, msg.c_str());
+    bool ok = client.publish(Topico, msg.c_str());
+    
+    if (ok) {
+        Serial.printf("[MQTT] Publicado: %s | %s\n", Topico, msg.c_str());
+    } else {
+        Serial.println("[MQTT] Falha ao publicar!");
+    }
 
-    Serial.printf("[MQTT] Publicado Tópico: %s | Valor: %s\n", Topico, msg.c_str());
+    return ok;
 }
+
 
 

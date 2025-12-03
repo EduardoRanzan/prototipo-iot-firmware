@@ -5,27 +5,50 @@
 #include "../include/config.h"
 #include "Utils/json/build-json.h"
 
+#include "Utils/sd/sd-manager.h"
+
+
 void setup() {
     Serial.begin(115200);
+    delay(2000);
+
     wifi_setup();
     mqtt_setup();
     sensors_setup();
+    sd_setup();
 }
+
 
 void loop() {
     wifi_loop();
     mqtt_loop();
 
+    // Se MQTT voltou → tentar enviar buffer
+    if (client.connected()) {
+        sd_resend_all();
+    }
+
     delay(CRON_TIME_COLECT);
 
     float temperatura = get_temperatura();
-    if (!isnan(temperatura)) {
-        mqtt_publish("sensores/temperatura", build_json(temperatura));
-    }
-
     float umidade = get_umidade();
 
+    if (!isnan(temperatura)) {
+
+        String json = build_json(temperatura);
+
+        if (!mqtt_publish("sensores/temperatura", json)) {
+            sd_save(json);
+        }
+    }
+
     if (!isnan(umidade)) {
-        mqtt_publish("sensores/umidade", build_json(umidade));
+
+        String json = build_json(umidade);
+
+        if (!mqtt_publish("sensores/umidade", json)) {
+            sd_save(json);
+        }
     }
 }
+
