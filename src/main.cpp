@@ -4,8 +4,7 @@
 #include "sensors/sensors.h"
 #include "../include/config.h"
 #include "Utils/json/build-json.h"
-
-#include "Utils/sd/sd-manager.h"
+#include "sd/sd-manager.h"
 
 
 void setup() {
@@ -23,7 +22,6 @@ void loop() {
     wifi_loop();
     mqtt_loop();
 
-    // Se MQTT voltou → tentar enviar buffer
     if (client.connected()) {
         sd_resend_all();
     }

@@ -18,14 +18,6 @@ bool sd_setup() {
 
     Serial.println("[SD] SD OK!");
 
-    File test = SD.open(FILE_BUFFER, FILE_WRITE);
-    if (!test) {
-        Serial.println("[SD] Não conseguiu criar arquivo! Problema de CS ou wiring.");
-    } else {
-        Serial.println("[SD] Arquivo criado com sucesso.");
-        test.close();
-    }
-
     return true;
 }
 
@@ -66,7 +58,6 @@ void sd_resend_all() {
         if (mqtt_publish("sensores/recuperados", line)) {
             Serial.println("[SD] Reenviado: " + line);
         } else {
-            // ERRO → para tudo e tenta enviar depois
             Serial.println("[SD] Falhou ao reenviar, para aqui");
             f.close();
             return;
@@ -75,8 +66,6 @@ void sd_resend_all() {
     }
 
     f.close();
-
-    // Se chegamos aqui → tudo enviado OK
     SD.remove(FILE_BUFFER);
     Serial.println("[SD] Buffer limpo!");
 }
