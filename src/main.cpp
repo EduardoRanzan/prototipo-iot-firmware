@@ -32,20 +32,18 @@ void loop() {
     float umidade = get_umidade();
 
     if (!isnan(temperatura)) {
-
         String json = build_json(temperatura);
 
         if (!mqtt_publish("sensores/temperatura", json)) {
-            sd_save(json);
+            sd_save("temperatura", json);
         }
     }
 
     if (!isnan(umidade)) {
-
         String json = build_json(umidade);
 
         if (!mqtt_publish("sensores/umidade", json)) {
-            sd_save(json);
+            sd_save("umidade", json);
         }
     }
 }

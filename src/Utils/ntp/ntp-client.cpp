@@ -13,5 +13,6 @@ void time_setup() {
 
 unsigned long get_timestamp() {
     timeClient.update();
+    Serial.printf("[NTP] time: %u\n", timeClient.getEpochTime());
     return timeClient.getEpochTime();
 }
